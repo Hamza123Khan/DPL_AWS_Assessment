@@ -9,14 +9,12 @@ on:
       - 'src/**'
       - 'requirements.txt'
       - 'package.json'
-
+permissions:
+      id-token: 'write'
+      contents: 'write'
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: 'read'
-      contents: 'write'
-
     env:
       AWS_REGION: us-east-1
 
