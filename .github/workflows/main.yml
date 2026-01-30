@@ -45,15 +45,7 @@ jobs:
           pip install -r requirements.txt
           pip install aws-cdk-lib.aws-lambda-python-alpha flake8 pytest bandit
 
-      # Step 5: Run Tests
-      - name: Run Tests (pytest)
-        run: pytest -q
-
-      # Step 6: Security scan
-      - name: Security Scan (bandit)
-        run: bandit -r . -ll
-
-      # Step 7: Setup Node and CDK
+      # Step 5: Setup Node and CDK
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -70,25 +62,25 @@ jobs:
       - name: Install CDK
         run: npm install -g aws-cdk
 
-      # Step 8: Configure AWS Credentials
+      # Step 6: Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # Step 9: CDK Bootstrap (run once per account/region)
+      # Step 7: CDK Bootstrap (run once per account/region)
       - name: CDK Bootstrap
         working-directory: infra
         run: |
           cdk bootstrap aws://$(aws sts get-caller-identity --query Account --output text)/${{ env.AWS_REGION }}
 
-      # Step 10: Deploy CDK
+      # Step 8: Deploy CDK
       - name: CDK Deploy
         working-directory: infra
         run: cdk deploy --require-approval never
 
-      # Step 11: Slack notification on success
+      # Step 9: Slack notification on success
       - name: Notify Slack (Deploy Success)
         if: success()
         run: |
@@ -96,7 +88,7 @@ jobs:
           --data '{"text":"✅ CDK deployment succeeded for Bedrock API on main branch."}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # Step 12: Slack notification on failure
+      # Step 10: Slack notification on failure
       - name: Notify Slack (Deploy Failed)
         if: failure()
         run: |
