@@ -14,8 +14,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: read
-      contents: write
+      id-token: 'read'
+      contents: 'write'
 
     env:
       AWS_REGION: us-east-1
