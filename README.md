@@ -52,8 +52,8 @@ SLACK_WEBHOOK_URL	Slack webhook for deployment notifications
 ```
 
 # The architecture consist of 
-1 api gateway from where the request will be send to lambda
-2 lamabda function which will extract the prompt and make an actual request to bedrock model which is "amazon.titan-text-lite-v1"
-3 After that the resposne from model will be send to user
-4 used the least expensive model where there is no requirement for like Anthropic model where you need to first give request to Anthropic to use their model
-5 total estemated cost will be 10 to 15$ involving all infra like s3, bedrock model, lambda and apigateway
+* api gateway from where the request will be send to lambda
+* lamabda function which will extract the prompt and make an actual request to bedrock model which is "amazon.titan-text-lite-v1"
+* After that the resposne from model will be send to user
+* used the least expensive model where there is no requirement for like Anthropic model where you need to first give request to Anthropic to use their model
+* total estemated cost will be 10 to 15$ involving all infra like s3, bedrock model, lambda and apigateway
